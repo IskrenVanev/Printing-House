@@ -19,7 +19,7 @@ public class PrintSomething {
         this.numberOfPages= numberOfPages;
     }
 
-    public double PrintTheThing(PrintSomething thing, PageSizeType pageSizeType){//we have already created an object of this class and now we want to print it
+    public double GetPriceForPrintingSomething(PrintSomething thing, PageSizeType pageSizeType){//we have already created an object of this class and now we want to print it
 
         //При отпечатването на всяко издание може да се използва обикновена хартия, гланцирана
         //хартия или хартия за отпечатване на вестници. Цената на хартията се определя от размера и
@@ -39,6 +39,10 @@ public class PrintSomething {
         }
         double PriceSum=numberOfPages*paperType.getPrice(pageSizeType);
 
+        //TODO:Print it
+
+       // PrintSomething printSomething = this;
+        //System.out.println(printSomething);
 
 
 
@@ -67,5 +71,14 @@ return PriceSum;//returns the cost of printing something
         return thingType;
     }
 
-
+    @Override
+    public String toString() {
+        return "PrintSomething{" +
+                "thingType=" + thingType +
+                ", title='" + title + '\'' +
+                ", id=" + id +
+                ", pageSizeType=" + pageSizeType +
+                ", numberOfPages=" + numberOfPages +
+                '}';
+    }
 }
