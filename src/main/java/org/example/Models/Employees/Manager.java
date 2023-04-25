@@ -11,6 +11,7 @@ public class Manager  extends Employee {
     }
     public double calculateSalary(double baseSalary, PrintingHouse printingHouse) {
        //TODO: Check if the income is better than expected!!!
+        //asd
         double salary = baseSalary + ((this.bonusPercentage/100)*baseSalary);
       //  double salary = baseSalary;
       //  if (printingHouse.getIncome() > printingHouse.getRevenueThreshold()) {
