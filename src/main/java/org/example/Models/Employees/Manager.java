@@ -3,21 +3,23 @@ package org.example.Models.Employees;
 import org.example.Models.Employees.Employee;
 import org.example.Models.PrintingHouse;
 
-public class Manager  extends Employee {
+public class Manager extends Employee {
     private double bonusPercentage;
+
     public Manager(String name, int id, double bonusPercentage) {
-        super(name, id);
+        super(name);
         this.bonusPercentage = bonusPercentage;
     }
-    public double calculateSalary(double baseSalary, PrintingHouse printingHouse) {
-       //TODO: Check if the income is better than expected!!!
-        //asd
-        double salary = baseSalary + ((this.bonusPercentage/100)*baseSalary);
-      //  double salary = baseSalary;
-      //  if (printingHouse.getIncome() > printingHouse.getRevenueThreshold()) {
-      //      salary += (bonusPercentage / 100) * baseSalary;
-      //  }
-      //  return salary;
+
+    public double calculateSalary(double printingHouseIncome, PrintingHouse printingHouse) {
+
+
+        double salary = printingHouse.getBaseSalary(); //+ ((this.bonusPercentage/100)*baseSalary);
+
+        if (printingHouse.getActualIncome() > printingHouse.getExpectedIncome()) {
+            salary += (bonusPercentage / 100) * salary;
+        }
+
         return salary;
     }
 

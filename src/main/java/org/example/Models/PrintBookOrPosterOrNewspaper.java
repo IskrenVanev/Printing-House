@@ -4,22 +4,23 @@ import org.example.Enums.PageSizeType;
 import org.example.Enums.PaperType;
 import org.example.Enums.ThingType;
 
-public class PrintSomething {
+public class PrintBookOrPosterOrNewspaper {
+    private static int nextId = 0;
     private ThingType thingType;
     private String title;
     private int id;
     private PageSizeType pageSizeType;
     private int numberOfPages;
 
-    public PrintSomething(ThingType thingType,String title, int id, PageSizeType pageSizeType, int numberOfPages) {
+    public PrintBookOrPosterOrNewspaper(ThingType thingType, String title, PageSizeType pageSizeType, int numberOfPages) {
         this.thingType = thingType;
         this.title = title;
-        this.id = id;
+        this.id = ++nextId;
         this.pageSizeType = pageSizeType;
-        this.numberOfPages= numberOfPages;
+        this.numberOfPages = numberOfPages;
     }
 
-    public double GetPriceForPrintingSomething(PrintSomething thing, PageSizeType pageSizeType){//we have already created an object of this class and now we want to print it
+    public double GetPriceForPrintingSomething(PrintBookOrPosterOrNewspaper thing, PageSizeType pageSizeType) {//we have already created an object of this class and now we want to print it
 
         //При отпечатването на всяко издание може да се използва обикновена хартия, гланцирана
         //хартия или хартия за отпечатване на вестници. Цената на хартията се определя от размера и
@@ -27,26 +28,18 @@ public class PrintSomething {
         int numberOfPages = this.numberOfPages;
         PaperType paperType = null;//for example regular paper
         ThingType thingType = thing.thingType;//for example book
-        if (thingType == ThingType.BOOK){
-           
+        if (thingType == ThingType.BOOK) {
+
             paperType = PaperType.REGULAR;
-        }
-        else if (thingType == ThingType.POSTER) {
+        } else if (thingType == ThingType.POSTER) {
             paperType = PaperType.GLOSSY;
-        }
-        else if(thingType == ThingType.NEWSPAPER){
+        } else if (thingType == ThingType.NEWSPAPER) {
             paperType = PaperType.NEWSPAPER;
         }
-        double PriceSum=numberOfPages*paperType.getPrice(pageSizeType);
-
-        //TODO:Print it
-
-       // PrintSomething printSomething = this;
-        //System.out.println(printSomething);
+        double PriceSum = numberOfPages * paperType.getPrice(pageSizeType);
 
 
-
-return PriceSum;//returns the cost of printing something
+        return PriceSum;//returns the cost of printing something
     }
 
     public String getTitle() {
@@ -54,17 +47,14 @@ return PriceSum;//returns the cost of printing something
     }
 
 
-
     public int getId() {
         return id;
     }
 
 
-
     public PageSizeType getPageSize() {
         return pageSizeType;
     }
-
 
 
     public ThingType getThingType() {

@@ -17,6 +17,7 @@ public enum PaperType {
                 throw new IllegalArgumentException("Unsupported paper type: " + this);  //TODO:Catch this
         }
     }
+
     private double getPriceForRegularPaper(PageSizeType pageSize) {
         switch (pageSize) {
             case A1:
