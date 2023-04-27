@@ -20,11 +20,9 @@ public class PrintBookOrPosterOrNewspaper {
         this.numberOfPages = numberOfPages;
     }
 
-    public double GetPriceForPrintingSomething(PrintBookOrPosterOrNewspaper thing, PageSizeType pageSizeType) {//we have already created an object of this class and now we want to print it
+    public double GetPriceForPrintingSomething(PrintBookOrPosterOrNewspaper thing, PageSizeType pageSizeType) {// price for one Book/Poster/Newspaper
 
-        //При отпечатването на всяко издание може да се използва обикновена хартия, гланцирана
-        //хартия или хартия за отпечатване на вестници. Цената на хартията се определя от размера и
-        //типа ѝ
+
         int numberOfPages = this.numberOfPages;
         PaperType paperType = null;//for example regular paper
         ThingType thingType = thing.thingType;//for example book

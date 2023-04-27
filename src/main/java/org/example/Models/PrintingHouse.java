@@ -16,10 +16,17 @@ public class PrintingHouse {
     private List<PrintBookOrPosterOrNewspaper> PrintBookOrPosterOrNewspaper;
     private Set<Employee> employees;
     private List<Double> boughtPapers;
+    private List<PrintingMachine> PrintingMachines;
 
     private double expectedIncome;//expected Income
     private double actualIncome;//TODO: implement the logic about it
     private double baseSalary;
+    private int numberOfPrintedThingsAfterWhichCustomerGetsDiscount;
+    private boolean isNumberOfPrintedThingsAfterWhichCustomerGetsDiscountSet = false;
+
+    private double percentageDiscount;
+    private boolean isPercentageDiscountSet = false;
+
 
     public PrintingHouse(double expectedIncome, double baseSalary) {
         this.expectedIncome = expectedIncome;
@@ -27,15 +34,18 @@ public class PrintingHouse {
         this.employees = new HashSet<>();
         this.PrintBookOrPosterOrNewspaper = new ArrayList<>();
         this.boughtPapers = new ArrayList<>();
+        this.PrintingMachines = new ArrayList<>();
     }
 
     public void hireEmployee(Employee employee) {
         employees.add(employee);
     }
 
-    public void addToPrintSomethingList(PrintBookOrPosterOrNewspaper pSth) {
+    public void addToPrintBookOrPosterOrNewspaper(PrintBookOrPosterOrNewspaper pSth) {
         PrintBookOrPosterOrNewspaper.add(pSth);
     }
+
+
 
     public double calculateTotalSalaryExpenses() {
         double totalSalary = 0;
@@ -67,6 +77,18 @@ public class PrintingHouse {
         }
         return sum;
     }
+    public double CalculatePrintingHouseIncome(double percentageDiscount){
+        double sum = 0;
+        if (numberOfPrintedThingsAfterWhichCustomerGetsDiscount > PrintBookOrPosterOrNewspaper.size()){
+            this.setPercentageDiscount(percentageDiscount);
+        }
+        for (PrintBookOrPosterOrNewspaper printBookOrPosterOrNewspaper : PrintBookOrPosterOrNewspaper) {
+            sum += (printBookOrPosterOrNewspaper.GetPriceForPrintingSomething(printBookOrPosterOrNewspaper, printBookOrPosterOrNewspaper.getPageSize()))
+                    - (percentageDiscount/100 *
+                    printBookOrPosterOrNewspaper.GetPriceForPrintingSomething(printBookOrPosterOrNewspaper, printBookOrPosterOrNewspaper.getPageSize()));
+        }
+        return sum;
+    }
 
     //   public double calculatePaperExpenses() {
     //       double sum = 0;
@@ -86,5 +108,24 @@ public class PrintingHouse {
 
     public double getBaseSalary() {
         return baseSalary;
+    }
+
+    public void setNumberOfPrintedThingsAfterWhichCustomerGetsDiscount(int numberOfPrintedThingsAfterWhichCustomerGetsDiscount) {
+        if (isNumberOfPrintedThingsAfterWhichCustomerGetsDiscountSet){
+            return;
+        }
+        this.numberOfPrintedThingsAfterWhichCustomerGetsDiscount = numberOfPrintedThingsAfterWhichCustomerGetsDiscount;
+        isNumberOfPrintedThingsAfterWhichCustomerGetsDiscountSet = true;
+    }
+
+    public void setPercentageDiscount(double percentageDiscount) {
+        if (isPercentageDiscountSet){
+            return;
+        }
+        if (percentageDiscount <0 || percentageDiscount >100){
+            throw new IllegalArgumentException("Percentage must be between 0 and 100");//TODO:catch this
+        }
+        this.percentageDiscount = percentageDiscount;
+        isPercentageDiscountSet = true;
     }
 }
