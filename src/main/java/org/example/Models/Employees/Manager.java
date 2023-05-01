@@ -11,10 +11,10 @@ public class Manager extends Employee {
         this.bonusPercentage = bonusPercentage;
     }
 
-    public double calculateSalary(double printingHouseIncome, PrintingHouse printingHouse) {
+    public double calculateSalary(PrintingHouse printingHouse) {
 
 
-        double salary = printingHouse.getBaseSalary(); //+ ((this.bonusPercentage/100)*baseSalary);
+        double salary = printingHouse.getBaseSalary();
 
         if (printingHouse.getActualIncome() > printingHouse.getExpectedIncome()) {
             salary += (bonusPercentage / 100) * salary;

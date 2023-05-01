@@ -21,15 +21,15 @@ public enum PaperType {
     private double getPriceForRegularPaper(PageSizeType pageSize) {
         switch (pageSize) {
             case A1:
-                return 2.50;
-            case A2:
-                return 1.50;
-            case A3:
-                return 1.00;
-            case A4:
-                return 0.75;
-            case A5:
                 return 0.50;
+            case A2:
+                return 0.40;
+            case A3:
+                return 0.30;
+            case A4:
+                return 0.25;
+            case A5:
+                return 0.10;
             default:
                 throw new IllegalArgumentException("Unsupported page size: " + pageSize); //TODO: Catch this
         }
@@ -38,15 +38,15 @@ public enum PaperType {
     private double getPriceForGlossyPaper(PageSizeType pageSize) {
         switch (pageSize) {
             case A1:
-                return 3.50;
-            case A2:
-                return 2.50;
-            case A3:
-                return 2.00;
-            case A4:
-                return 1.75;
-            case A5:
                 return 1.50;
+            case A2:
+                return 1.10;
+            case A3:
+                return 0.80;
+            case A4:
+                return 0.45;
+            case A5:
+                return 0.20;
             default:
                 throw new IllegalArgumentException("Unsupported page size: " + pageSize); //TODO: Catch this
         }
@@ -55,15 +55,15 @@ public enum PaperType {
     private double getPriceForNewspaperPaper(PageSizeType pageSize) {
         switch (pageSize) {
             case A1:
-                return 1.50;
-            case A2:
-                return 0.50;
-            case A3:
                 return 0.40;
-            case A4:
-                return 0.35;
-            case A5:
+            case A2:
                 return 0.30;
+            case A3:
+                return 0.20;
+            case A4:
+                return 0.15;
+            case A5:
+                return 0.5;
             default:
                 throw new IllegalArgumentException("Unsupported page size: " + pageSize); //TODO: Catch this
         }
