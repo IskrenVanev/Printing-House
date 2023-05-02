@@ -6,7 +6,7 @@ import org.example.Models.PrintingHouse;
 public class Manager extends Employee {
     private double bonusPercentage;
 
-    public Manager(String name, int id, double bonusPercentage) {
+    public Manager(String name, double bonusPercentage) {
         super(name);
         this.bonusPercentage = bonusPercentage;
     }

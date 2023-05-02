@@ -19,7 +19,7 @@ public class PrintingHouse {
     private List<Double> boughtPapers;
     private List<PrintingMachine> PrintingMachines;
 
-    private double expectedIncome;//expected Income
+    private double expectedIncome;
     private double actualIncome;
     private double baseSalary;
     private int numberOfPrintedThingsAfterWhichCustomerGetsDiscount;
@@ -99,6 +99,9 @@ public class PrintingHouse {
         }
 
         for (PrintingHousePublication printingHousePublication : PrintingHousePublications) {
+            if (printingHousePublication.getIsColored() == true){
+
+            }
             double priceForPrinting = printingHousePublication.getPriceForPrinting(printingHousePublication.getPageSize());
             double priceForSelling = priceForPrinting * (1 + printingHousePublication.getOverchargePercentage() / 100);
             double priceAfterDiscount = priceForSelling * (1 - percentageDiscount / 100);

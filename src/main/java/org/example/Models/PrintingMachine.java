@@ -1,6 +1,8 @@
 package org.example.Models;
 
 import org.example.Enums.ColorType;
+import org.example.Enums.PageSizeType;
+import org.example.Enums.PaperType;
 import org.example.Exceptions.NotEnoughPaperException;
 
 public class PrintingMachine {
@@ -32,5 +34,7 @@ public class PrintingMachine {
         this.maxPagesPrintedInOneMinute = maxPagesPrintedInOneMinute;
     }
 
-
+    public ColorType getColor() {
+        return color;
+    }
 }
