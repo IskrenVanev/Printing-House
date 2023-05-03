@@ -18,10 +18,10 @@ public abstract class PrintingHousePublication {
     private double overchargePercentage;
     private boolean isColored;
 
-    private double OverchargeIfColored;
+    private double OverchargeIfColoredPercentage;
 
     public PrintingHousePublication(String title, PageSizeType pageSizeType, int numberOfPages,
-                                    double overchargePercentage,boolean isColored, double overchargeIfColored) {
+                                    double overchargePercentage,boolean isColored, double overchargeIfColoredPercentage) {
 
         this.title = title;
 
@@ -31,10 +31,10 @@ public abstract class PrintingHousePublication {
         this.overchargePercentage = overchargePercentage;
         this.isColored = isColored;
         if (isColored){
-            this.OverchargeIfColored = overchargeIfColored;
+            this.OverchargeIfColoredPercentage = overchargeIfColoredPercentage;
         }
         else {
-            this.OverchargeIfColored = 0;
+            this.OverchargeIfColoredPercentage = 0;
         }
 
         this.sellingPrice = calculateSellingPrice();
@@ -60,7 +60,7 @@ public abstract class PrintingHousePublication {
         PaperType paperType = getPaperType();
         double price = numberOfPages * paperType.getPrice(pageSizeType);
         if (this.getIsColored() == true){
-          double overcharge =  this.numberOfPages * this.OverchargeIfColored;
+          double overcharge =  this.numberOfPages * (this.OverchargeIfColoredPercentage/100);
           price += overcharge;
         }
 
