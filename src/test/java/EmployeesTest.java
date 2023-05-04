@@ -10,7 +10,7 @@ public class EmployeesTest {
 
     @Test
     void calculateSalaryManager(){
-        PrintingHouse printingHouse = new PrintingHouse(20000, 1000, 5);
+        PrintingHouse printingHouse = new PrintingHouse(100000,20000, 1000, 5);
         Employee employee = new Manager("Ivan",10);
         double expectedSalary = 1100;
         double actualSalary = 1100;

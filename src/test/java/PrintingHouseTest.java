@@ -2,6 +2,7 @@ import org.example.Enums.ColorType;
 import org.example.Enums.PageSizeType;
 import org.example.Enums.PaperType;
 import org.example.Exceptions.NotEnoughPaperException;
+import org.example.Exceptions.OutOfMoneyException;
 import org.example.Models.Employees.Employee;
 import org.example.Models.Employees.Manager;
 import org.example.Models.Employees.PrintingMachineOperator;
@@ -18,13 +19,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PrintingHouseTest {
     @Test
     public void testHireEmployee() {
-        PrintingHouse printingHouse = new PrintingHouse(1000, 5000, 5);
+        PrintingHouse printingHouse = new PrintingHouse(100000,1000, 5000, 5);
         Employee employee1 = new Employee("John");
         Employee employee2 = new Employee("Jane");
 
@@ -41,7 +41,7 @@ public class PrintingHouseTest {
     @Test
     public void testAddToPrintBookOrPosterOrNewspaper() {
 
-        PrintingHouse printingHouse = new PrintingHouse(20000, 2000, 5);
+        PrintingHouse printingHouse = new PrintingHouse(100000,20000, 2000, 5);
 
         // Create a new book
         String bookTitle = "Test Book";
@@ -96,13 +96,13 @@ public class PrintingHouseTest {
     @Test
     public void testBuyPrintingMachinesBW() throws NotEnoughPaperException {
 
-        PrintingHouse printingHouse = new PrintingHouse(20000, 2000, 5);
-        printingHouse.BuyPrintingMachinesBW(2, 50, 10, 40);
+        PrintingHouse printingHouse = new PrintingHouse(100000,20000, 2000, 5);
+        printingHouse.BuyPrintingMachinesBW(70,100, 50, 10, 40);
 
         PrintingMachine expectedPrintingMachine =
-                new PrintingMachine(50, ColorType.BLACK_AND_WHITE, 10, 40);
+                new PrintingMachine(100,50, ColorType.BLACK_AND_WHITE, 10, 40);
         List<PrintingMachine> printingMachines = printingHouse.getPrintingMachines();
-        assertEquals(2, printingMachines.size());
+        assertEquals(70, printingMachines.size());
 
 
         for (PrintingMachine printingMachine : printingHouse.getPrintingMachines()) {
@@ -116,14 +116,14 @@ public class PrintingHouseTest {
     @Test
     public void testBuyPrintingMachinesCLR() throws NotEnoughPaperException{
 
-        PrintingHouse printingHouse = new PrintingHouse(20000, 2000, 5);
+        PrintingHouse printingHouse = new PrintingHouse(100000,20000, 2000, 5);
 
-        printingHouse.BuyPrintingMachinesCLR(5, 50, 10, 40);
+        printingHouse.BuyPrintingMachinesCLR(70,500, 50, 10, 40);
 
         PrintingMachine expectedPrintingMachine =
-                new PrintingMachine(50, ColorType.COLORED, 10, 40);
+                new PrintingMachine(500,50, ColorType.COLORED, 10, 40);
         List<PrintingMachine> printingMachines = printingHouse.getPrintingMachines();
-        assertEquals(5, printingMachines.size());
+        assertEquals(70, printingMachines.size());
 
         for (PrintingMachine printingMachine : printingHouse.getPrintingMachines()) {
             assertEquals(expectedPrintingMachine.getColor(), printingMachine.getColor());
@@ -135,19 +135,19 @@ public class PrintingHouseTest {
 
     @Test
     public void testBuyMixedPrintingMachines() throws NotEnoughPaperException{
-        PrintingHouse printingHouse = new PrintingHouse(20000, 2000, 5);
-        printingHouse.BuyPrintingMachinesCLR(5, 50, 10, 40);
-        printingHouse.BuyPrintingMachinesBW(2, 50, 10, 40);
+        PrintingHouse printingHouse = new PrintingHouse(100000,20000, 2000, 5);
+        printingHouse.BuyPrintingMachinesCLR(70,5, 50, 10, 40);
+        printingHouse.BuyPrintingMachinesBW(70,2, 50, 10, 40);
 
 
         List<PrintingMachine> printingMachines = printingHouse.getPrintingMachines();
-        assertEquals(7, printingMachines.size());
+        assertEquals(140, printingMachines.size());
     }
 
     @Test
     public void testCalculatePrintingHouseIncomeIfIsColoredIsFalse() {
         // Create a new printing house object
-        PrintingHouse printingHouse = new PrintingHouse(1000, 10, 100);
+        PrintingHouse printingHouse = new PrintingHouse(100000,1000, 10, 100);
 
         // Create a new printing house publication object and add it to the printing house
         PrintingHousePublication publication = new Book("The Lord of the Rings", PageSizeType.A4,
@@ -164,7 +164,7 @@ public class PrintingHouseTest {
 
     @Test
     public void testCalculatePrintingHouseIncomeIfIsColoredIsTrue() {
-        PrintingHouse printingHouse = new PrintingHouse(1000, 10, 100);
+        PrintingHouse printingHouse = new PrintingHouse(100000,1000, 10, 100);
 
         // Create a new printing house publication object and add it to the printing house
         PrintingHousePublication publication = new Book("The Lord of the Rings", PageSizeType.A4,
@@ -176,8 +176,8 @@ public class PrintingHouseTest {
     }
 
     @Test
-    public void calculateTotalSalaryExpenses() {
-        PrintingHouse printingHouse = new PrintingHouse(2.5, 100, 100);
+    public void calculateTotalSalaryExpenses() throws OutOfMoneyException {
+        PrintingHouse printingHouse = new PrintingHouse(100000,2.5, 1000, 100);
         Employee employee = new PrintingMachineOperator("Ivan");
         Employee employee2 = new Manager("Iskren", 10);
         PrintingHousePublication publication = new Book("The Lord of the Rings", PageSizeType.A4,
@@ -187,14 +187,14 @@ public class PrintingHouseTest {
 
         printingHouse.hireEmployee(employee);
         printingHouse.hireEmployee(employee2);
-        double expectedSalaryExpenses = 210;
+        double expectedSalaryExpenses = 2100;
         assertEquals(expectedSalaryExpenses, printingHouse.calculateTotalSalaryExpenses());
 
     }
 
     @Test
-    public void calculateTotalSalaryExpensesIfExpectedIncomeIsBiggerThanActual() {
-        PrintingHouse printingHouse = new PrintingHouse(3, 100, 100);
+    public void calculateTotalSalaryExpensesIfExpectedIncomeIsBiggerThanActual() throws OutOfMoneyException{
+        PrintingHouse printingHouse = new PrintingHouse(100000,3, 1000, 100);
         Employee employee = new PrintingMachineOperator("Ivan");
         Employee employee2 = new Manager("Iskren", 10);
         PrintingHousePublication publication = new Book("The Lord of the Rings", PageSizeType.A4,
@@ -204,25 +204,38 @@ public class PrintingHouseTest {
 
         printingHouse.hireEmployee(employee);
         printingHouse.hireEmployee(employee2);
-        double expectedSalaryExpenses = 200;
+        double expectedSalaryExpenses = 2000;
         assertEquals(expectedSalaryExpenses, printingHouse.calculateTotalSalaryExpenses());
 
     }
 
     @Test
     public void buyPaperTest(){
-        PrintingHouse printingHouse = new PrintingHouse(3, 100, 100);
+        PrintingHouse printingHouse = new PrintingHouse(100000,3, 100, 100);
         printingHouse.buyPaper(100, PaperType.REGULAR, PageSizeType.A4);
         double expectedPaperPrice = 25;
         assertEquals(expectedPaperPrice, printingHouse.buyPaper(100, PaperType.REGULAR, PageSizeType.A4));
     }
     @Test
     public void calculatePaperExpenses(){
-        PrintingHouse printingHouse = new PrintingHouse(3, 100, 100);
+        PrintingHouse printingHouse = new PrintingHouse(100000,3, 100, 100);
         printingHouse.buyPaper(100, PaperType.REGULAR, PageSizeType.A4);
         printingHouse.buyPaper(100, PaperType.REGULAR, PageSizeType.A4);
         double expectedCalculation = 50;
 
         assertEquals(expectedCalculation, printingHouse.calculatePaperExpenses());
+    }
+
+    @Test
+    public void OutOfMoneyExceptionTest(){
+        PrintingHouse printingHouse = new PrintingHouse(10,3, 1000, 100);
+        Employee employee = new PrintingMachineOperator("Iskrata");
+        printingHouse.hireEmployee(employee);
+
+        OutOfMoneyException exception = assertThrows(OutOfMoneyException.class, () -> {
+            printingHouse.calculateTotalSalaryExpenses();
+        });
+        assertEquals("The company is out of money. Salaries will not be payed this month.", exception.getMessage());
+
     }
 }

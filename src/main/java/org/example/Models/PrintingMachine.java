@@ -12,8 +12,22 @@ public class PrintingMachine {
 
     private int maxPagesPrintedInOneMinute; //for example 10
 
-    public PrintingMachine(int maxCapacityPaperThatIsLoaded, ColorType color, int maxPagesPrintedInOneMinute,int LoadedPaper)throws NotEnoughPaperException {
-        this.maxCapacityPaperThatIsLoaded = maxCapacityPaperThatIsLoaded;
+    private double PriceOfThePrintingMachine;
+
+    public PrintingMachine(double priceOfThePrintingMachine,int maxCapacityPaperThatIsLoaded, ColorType color, int maxPagesPrintedInOneMinute,int LoadedPaper)throws NotEnoughPaperException {
+        if (priceOfThePrintingMachine <= 0){
+            this.PriceOfThePrintingMachine = 60;
+        }
+        else {
+            this.PriceOfThePrintingMachine = priceOfThePrintingMachine;
+        }
+        if (maxCapacityPaperThatIsLoaded <=0){
+            this.maxCapacityPaperThatIsLoaded = 1;
+        }
+        else {
+            this.maxCapacityPaperThatIsLoaded = maxCapacityPaperThatIsLoaded;
+        }
+
         this.color = color;
 
         if (LoadedPaper <= maxCapacityPaperThatIsLoaded){
@@ -26,7 +40,7 @@ public class PrintingMachine {
 
             throw new NotEnoughPaperException("There is not enough paper in the printing machine! " +
                     "It can be loaded with a maximum of " + this.maxCapacityPaperThatIsLoaded + " papers!", "");
-        }//TODO:catch!
+        }
         this.maxPagesPrintedInOneMinute = maxPagesPrintedInOneMinute;
 
     }

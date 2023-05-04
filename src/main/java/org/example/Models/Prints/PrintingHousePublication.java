@@ -4,9 +4,11 @@ import org.example.Enums.ColorType;
 import org.example.Enums.PageSizeType;
 import org.example.Enums.PaperType;
 import org.example.Models.PrintingMachine;
+
+import java.io.Serializable;
 //import org.example.Enums.ThingType;
 
-public abstract class PrintingHousePublication {
+public abstract class PrintingHousePublication implements Serializable {
 
     private String title;
 
@@ -23,6 +25,10 @@ public abstract class PrintingHousePublication {
     public PrintingHousePublication(String title, PageSizeType pageSizeType, int numberOfPages,
                                     double overchargePercentage,boolean isColored, double overchargeIfColoredPercentage) {
 
+        if (overchargePercentage <= 0) {
+            throw new IllegalArgumentException("Overcharge percentage cannot be negative or 0");
+        }
+
         this.title = title;
 
         this.pageSizeType = pageSizeType;
@@ -30,7 +36,7 @@ public abstract class PrintingHousePublication {
 
         this.overchargePercentage = overchargePercentage;
         this.isColored = isColored;
-        if (isColored){
+        if (isColored && overchargeIfColoredPercentage >= 0){
             this.OverchargeIfColoredPercentage = overchargeIfColoredPercentage;
         }
         else {

@@ -14,7 +14,7 @@ public enum PaperType {
             case NEWSPAPER:
                 return getPriceForNewspaperPaper(pageSize);
             default:
-                throw new IllegalArgumentException("Unsupported paper type: " + this);  //TODO:Catch this
+                throw new IllegalArgumentException("Unsupported paper type: " + this);
         }
     }
 
@@ -31,7 +31,7 @@ public enum PaperType {
             case A5:
                 return 0.10;
             default:
-                throw new IllegalArgumentException("Unsupported page size: " + pageSize); //TODO: Catch this
+                throw new IllegalArgumentException("Unsupported page size: " + pageSize);
         }
     }
 
@@ -48,7 +48,7 @@ public enum PaperType {
             case A5:
                 return 0.20;
             default:
-                throw new IllegalArgumentException("Unsupported page size: " + pageSize); //TODO: Catch this
+                throw new IllegalArgumentException("Unsupported page size: " + pageSize);
         }
     }
 
@@ -65,7 +65,7 @@ public enum PaperType {
             case A5:
                 return 0.5;
             default:
-                throw new IllegalArgumentException("Unsupported page size: " + pageSize); //TODO: Catch this
+                throw new IllegalArgumentException("Unsupported page size: " + pageSize);
         }
     }
 }

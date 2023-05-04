@@ -4,17 +4,19 @@ import org.example.Enums.ColorType;
 import org.example.Enums.PageSizeType;
 import org.example.Enums.PaperType;
 import org.example.Exceptions.NotEnoughPaperException;
+import org.example.Exceptions.OutOfMoneyException;
 import org.example.Models.Employees.Employee;
 import org.example.Models.Employees.Manager;
 import org.example.Models.Employees.PrintingMachineOperator;
 import org.example.Models.Prints.PrintingHousePublication;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class PrintingHouse {
+public class PrintingHouse implements Serializable {
     private List<PrintingHousePublication> PrintingHousePublications;
     private Set<Employee> employees;
     private List<Double> boughtPapers;
@@ -29,10 +31,17 @@ public class PrintingHouse {
     private double percentageDiscount;
    // private boolean isPercentageDiscountSet = false;
 
-
-    public PrintingHouse(double expectedIncome, double baseSalary, int numberOfPrintedThingsAfterWhichCustomerGetsDiscount) {
+private double MoneyThatThePrintingHouseHave;
+    public PrintingHouse(double MoneyThatThePrintingHouseHave, double expectedIncome, double baseSalary, int numberOfPrintedThingsAfterWhichCustomerGetsDiscount) {
+        this.MoneyThatThePrintingHouseHave = MoneyThatThePrintingHouseHave;
         this.expectedIncome = expectedIncome;
-        this.baseSalary = baseSalary;
+        if (baseSalary <= 780){//minimal salary for Bulgaria
+            this.baseSalary = 780;
+        }
+        else {
+            this.baseSalary = baseSalary;
+        }
+
         this.numberOfPrintedThingsAfterWhichCustomerGetsDiscount = numberOfPrintedThingsAfterWhichCustomerGetsDiscount;
         this.percentageDiscount = 0;
         this.employees = new HashSet<>();
@@ -53,9 +62,10 @@ public class PrintingHouse {
         return PrintingHousePublications;
     }
 
-    public void BuyPrintingMachinesBW(int countBW, int maxCapacityPaper, int maxPrintedOneMin, int LoadedPaper) throws NotEnoughPaperException {
+    public void BuyPrintingMachinesBW(int countBW,double priceOfPMachine, int maxCapacityPaper, int maxPrintedOneMin, int LoadedPaper) throws NotEnoughPaperException {
+
         PrintingMachine printingMachine =
-                new PrintingMachine(maxCapacityPaper , ColorType.BLACK_AND_WHITE, maxPrintedOneMin, LoadedPaper);
+                new PrintingMachine(priceOfPMachine ,maxCapacityPaper ,ColorType.BLACK_AND_WHITE, maxPrintedOneMin, LoadedPaper);
         for (int i = 0; i<countBW;i++){
 
             PrintingMachines.add(printingMachine);
@@ -66,9 +76,9 @@ public class PrintingHouse {
         return PrintingMachines;
     }
 
-    public void BuyPrintingMachinesCLR(int countCLR, int maxCapacityPaper, int maxPrintedOneMin, int LoadedPaper)throws NotEnoughPaperException{
+    public void BuyPrintingMachinesCLR(int countCLR,double priceOfPMachine, int maxCapacityPaper, int maxPrintedOneMin, int LoadedPaper)throws NotEnoughPaperException{
         PrintingMachine printingMachine =
-                new PrintingMachine(maxCapacityPaper , ColorType.COLORED, maxPrintedOneMin, LoadedPaper);
+                new PrintingMachine(priceOfPMachine,maxCapacityPaper , ColorType.COLORED, maxPrintedOneMin, LoadedPaper);
         for (int i = 0; i<countCLR;i++){
 
             PrintingMachines.add(printingMachine);
@@ -81,7 +91,7 @@ public class PrintingHouse {
 
     public double CalculatePrintingHouseIncome(double percentageDiscount){
         double sum = 0;
-        if (numberOfPrintedThingsAfterWhichCustomerGetsDiscount > PrintingHousePublications.size()){
+        if (numberOfPrintedThingsAfterWhichCustomerGetsDiscount < PrintingHousePublications.size()){
 
             this.percentageDiscount = percentageDiscount;
         }
@@ -95,12 +105,16 @@ public class PrintingHouse {
             double priceForPrinting = printingHousePublication.getPriceForPrinting(printingHousePublication.getPageSize());
             double priceForSelling = priceForPrinting * (1 + printingHousePublication.getOverchargePercentage() / 100);
             double priceAfterDiscount = priceForSelling * (1 - percentageDiscount / 100);
-            sum += priceAfterDiscount - priceForPrinting;
+            double winPrice = priceAfterDiscount - priceForPrinting;
+            if (winPrice <=0){
+                winPrice = 0.01;
+            }
+            sum += winPrice;
         }
         this.actualIncome = sum;
         return sum;
     }
-    public double calculateTotalSalaryExpenses() {
+    public double calculateTotalSalaryExpenses() throws OutOfMoneyException{
         double totalSalary = 0;
         for (Employee employee : employees) {
             if (employee instanceof PrintingMachineOperator) {
@@ -109,6 +123,9 @@ public class PrintingHouse {
                 totalSalary += ((Manager) employee).calculateSalary(this);
             }
 
+        }
+        if (totalSalary > this.MoneyThatThePrintingHouseHave ){
+            throw new OutOfMoneyException("The company is out of money. Salaries will not be payed this month.");
         }
         return totalSalary;
     }
