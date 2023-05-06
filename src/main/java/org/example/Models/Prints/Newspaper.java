@@ -12,4 +12,10 @@ public class Newspaper extends PrintingHousePublication {
         return PaperType.NEWSPAPER;
     }
 
+    @Override
+    public String toString() {
+        return "Newspaper{" +
+                "numberOfPages=" + numberOfPages +
+                "} " + super.toString();
+    }
 }

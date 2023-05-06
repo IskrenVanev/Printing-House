@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 public class PrintingHouse implements Serializable {
+    private String name;
     private List<PrintingHousePublication> PrintingHousePublications;
     private Set<Employee> employees;
     private List<Double> boughtPapers;
@@ -26,19 +27,20 @@ public class PrintingHouse implements Serializable {
     private double actualIncome;
     private double baseSalary;
     private final int numberOfPrintedThingsAfterWhichCustomerGetsDiscount;
-   // private boolean isNumberOfPrintedThingsAfterWhichCustomerGetsDiscountSet = false;
+
 
     private double percentageDiscount;
-   // private boolean isPercentageDiscountSet = false;
 
-private double MoneyThatThePrintingHouseHave;
-    public PrintingHouse(double MoneyThatThePrintingHouseHave, double expectedIncome, double baseSalary, int numberOfPrintedThingsAfterWhichCustomerGetsDiscount) {
+
+    private double MoneyThatThePrintingHouseHave;
+
+    public PrintingHouse(String name, double MoneyThatThePrintingHouseHave, double expectedIncome, double baseSalary, int numberOfPrintedThingsAfterWhichCustomerGetsDiscount) {
+        this.name = name;
         this.MoneyThatThePrintingHouseHave = MoneyThatThePrintingHouseHave;
         this.expectedIncome = expectedIncome;
-        if (baseSalary <= 780){//minimal salary for Bulgaria
+        if (baseSalary <= 780) {//minimal salary for Bulgaria
             this.baseSalary = 780;
-        }
-        else {
+        } else {
             this.baseSalary = baseSalary;
         }
 
@@ -48,6 +50,10 @@ private double MoneyThatThePrintingHouseHave;
         this.PrintingHousePublications = new ArrayList<>();
         this.boughtPapers = new ArrayList<>();
         this.PrintingMachines = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void hireEmployee(Employee employee) {
@@ -62,11 +68,11 @@ private double MoneyThatThePrintingHouseHave;
         return PrintingHousePublications;
     }
 
-    public void BuyPrintingMachinesBW(int countBW,double priceOfPMachine, int maxCapacityPaper, int maxPrintedOneMin, int LoadedPaper) throws NotEnoughPaperException {
+    public void BuyPrintingMachinesBW(int countBW, double priceOfPMachine, int maxCapacityPaper, int maxPrintedOneMin, int LoadedPaper) throws NotEnoughPaperException {
 
         PrintingMachine printingMachine =
-                new PrintingMachine(priceOfPMachine ,maxCapacityPaper ,ColorType.BLACK_AND_WHITE, maxPrintedOneMin, LoadedPaper);
-        for (int i = 0; i<countBW;i++){
+                new PrintingMachine(priceOfPMachine, maxCapacityPaper, ColorType.BLACK_AND_WHITE, maxPrintedOneMin, LoadedPaper);
+        for (int i = 0; i < countBW; i++) {
 
             PrintingMachines.add(printingMachine);
         }
@@ -76,10 +82,10 @@ private double MoneyThatThePrintingHouseHave;
         return PrintingMachines;
     }
 
-    public void BuyPrintingMachinesCLR(int countCLR,double priceOfPMachine, int maxCapacityPaper, int maxPrintedOneMin, int LoadedPaper)throws NotEnoughPaperException{
+    public void BuyPrintingMachinesCLR(int countCLR, double priceOfPMachine, int maxCapacityPaper, int maxPrintedOneMin, int LoadedPaper) throws NotEnoughPaperException {
         PrintingMachine printingMachine =
-                new PrintingMachine(priceOfPMachine,maxCapacityPaper , ColorType.COLORED, maxPrintedOneMin, LoadedPaper);
-        for (int i = 0; i<countCLR;i++){
+                new PrintingMachine(priceOfPMachine, maxCapacityPaper, ColorType.COLORED, maxPrintedOneMin, LoadedPaper);
+        for (int i = 0; i < countCLR; i++) {
 
             PrintingMachines.add(printingMachine);
         }
@@ -89,13 +95,12 @@ private double MoneyThatThePrintingHouseHave;
         return percentageDiscount;
     }
 
-    public double CalculatePrintingHouseIncome(double percentageDiscount){
+    public double CalculatePrintingHouseIncome(double percentageDiscount) {
         double sum = 0;
-        if (numberOfPrintedThingsAfterWhichCustomerGetsDiscount < PrintingHousePublications.size()){
+        if (numberOfPrintedThingsAfterWhichCustomerGetsDiscount < PrintingHousePublications.size()) {
 
             this.percentageDiscount = percentageDiscount;
-        }
-        else{
+        } else {
             this.percentageDiscount = 0;
         }
 
@@ -106,7 +111,7 @@ private double MoneyThatThePrintingHouseHave;
             double priceForSelling = priceForPrinting * (1 + printingHousePublication.getOverchargePercentage() / 100);
             double priceAfterDiscount = priceForSelling * (1 - percentageDiscount / 100);
             double winPrice = priceAfterDiscount - priceForPrinting;
-            if (winPrice <=0){
+            if (winPrice <= 0) {
                 winPrice = 0.01;
             }
             sum += winPrice;
@@ -114,7 +119,8 @@ private double MoneyThatThePrintingHouseHave;
         this.actualIncome = sum;
         return sum;
     }
-    public double calculateTotalSalaryExpenses() throws OutOfMoneyException{
+
+    public double calculateTotalSalaryExpenses() throws OutOfMoneyException {
         double totalSalary = 0;
         for (Employee employee : employees) {
             if (employee instanceof PrintingMachineOperator) {
@@ -124,11 +130,12 @@ private double MoneyThatThePrintingHouseHave;
             }
 
         }
-        if (totalSalary > this.MoneyThatThePrintingHouseHave ){
+        if (totalSalary > this.MoneyThatThePrintingHouseHave) {
             throw new OutOfMoneyException("The company is out of money. Salaries will not be payed this month.");
         }
         return totalSalary;
     }
+
     public double buyPaper(int numberOfPapers, PaperType paperType, PageSizeType pageSizeType) {
         double sum = 0;
 
@@ -138,16 +145,14 @@ private double MoneyThatThePrintingHouseHave;
         boughtPapers.add(sum);
         return sum;
     }
+
     public double calculatePaperExpenses() {
         double sum = 0;
-        for(Double boughtPaper : boughtPapers){
-            sum+= boughtPaper;
+        for (Double boughtPaper : boughtPapers) {
+            sum += boughtPaper;
         }
         return sum;
     }
-
-
-
 
 
     public void setExpectedIncome(double expectedIncome) {
@@ -166,24 +171,6 @@ private double MoneyThatThePrintingHouseHave;
         return baseSalary;
     }
 
-  //  public void setNumberOfPrintedThingsAfterWhichCustomerGetsDiscount(int numberOfPrintedThingsAfterWhichCustomerGetsDiscount) {
-  //      if (isNumberOfPrintedThingsAfterWhichCustomerGetsDiscountSet){
-  //          return;
-  //      }
-  //      this.numberOfPrintedThingsAfterWhichCustomerGetsDiscount = numberOfPrintedThingsAfterWhichCustomerGetsDiscount;
-  //      isNumberOfPrintedThingsAfterWhichCustomerGetsDiscountSet = true;
-  //  }
-
-   // public void setPercentageDiscount(double percentageDiscount) throws IllegalArgumentException{
-   //     if (isPercentageDiscountSet){
-   //         return;
-   //     }
-   //     if (percentageDiscount <0 || percentageDiscount >100){
-   //         throw new IllegalArgumentException("Percentage must be between 0 and 100");//TODO:catch this
-   //     }
-   //     this.percentageDiscount = percentageDiscount;
-   //     isPercentageDiscountSet = true;
-   // }
 
     public Set<Employee> getEmployees() {
         return employees;

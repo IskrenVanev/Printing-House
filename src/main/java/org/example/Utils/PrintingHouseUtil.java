@@ -2,7 +2,7 @@ package org.example.Utils;
 
 import java.io.*;
 
-public class PrintingHouseUtil {//TODO:Finish in main method
+public class PrintingHouseUtil {
 
     public static void serialize(Object object, String filename) throws IOException {
         try (FileOutputStream fileOut = new FileOutputStream(filename);

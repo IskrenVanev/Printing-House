@@ -13,4 +13,11 @@ public class Book extends PrintingHousePublication {
     protected PaperType getPaperType() {
         return PaperType.REGULAR;
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "numberOfPages=" + numberOfPages +
+                "} " + super.toString();
+    }
 }

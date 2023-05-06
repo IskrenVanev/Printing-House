@@ -2,7 +2,9 @@ package org.example.Models.Employees;
 
 import org.example.Models.Employees.Employee;
 
-public class PrintingMachineOperator extends Employee {
+import java.io.Serializable;
+
+public class PrintingMachineOperator  extends Employee implements Serializable{
     public PrintingMachineOperator(String name) {
         super(name);
     }

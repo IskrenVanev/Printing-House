@@ -12,5 +12,10 @@ public class Poster extends PrintingHousePublication {
         return PaperType.GLOSSY;
     }
 
-
+    @Override
+    public String toString() {
+        return "Poster{" +
+                "numberOfPages=" + numberOfPages +
+                "} " + super.toString();
+    }
 }

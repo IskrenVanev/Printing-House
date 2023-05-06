@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PrintingHouseTest {
     @Test
     public void testHireEmployee() {
-        PrintingHouse printingHouse = new PrintingHouse(100000,1000, 5000, 5);
+        PrintingHouse printingHouse = new PrintingHouse("IskoPHouse",100000,1000, 5000, 5);
         Employee employee1 = new Employee("John");
         Employee employee2 = new Employee("Jane");
 
@@ -41,7 +41,7 @@ public class PrintingHouseTest {
     @Test
     public void testAddToPrintBookOrPosterOrNewspaper() {
 
-        PrintingHouse printingHouse = new PrintingHouse(100000,20000, 2000, 5);
+        PrintingHouse printingHouse = new PrintingHouse("IskoPHouse",100000,20000, 2000, 5);
 
         // Create a new book
         String bookTitle = "Test Book";
@@ -96,7 +96,7 @@ public class PrintingHouseTest {
     @Test
     public void testBuyPrintingMachinesBW() throws NotEnoughPaperException {
 
-        PrintingHouse printingHouse = new PrintingHouse(100000,20000, 2000, 5);
+        PrintingHouse printingHouse = new PrintingHouse("IskoPHouse",100000,20000, 2000, 5);
         printingHouse.BuyPrintingMachinesBW(70,100, 50, 10, 40);
 
         PrintingMachine expectedPrintingMachine =
@@ -116,7 +116,7 @@ public class PrintingHouseTest {
     @Test
     public void testBuyPrintingMachinesCLR() throws NotEnoughPaperException{
 
-        PrintingHouse printingHouse = new PrintingHouse(100000,20000, 2000, 5);
+        PrintingHouse printingHouse = new PrintingHouse("IskoPHouse",100000,20000, 2000, 5);
 
         printingHouse.BuyPrintingMachinesCLR(70,500, 50, 10, 40);
 
@@ -135,7 +135,7 @@ public class PrintingHouseTest {
 
     @Test
     public void testBuyMixedPrintingMachines() throws NotEnoughPaperException{
-        PrintingHouse printingHouse = new PrintingHouse(100000,20000, 2000, 5);
+        PrintingHouse printingHouse = new PrintingHouse("IskoPHouse",100000,20000, 2000, 5);
         printingHouse.BuyPrintingMachinesCLR(70,5, 50, 10, 40);
         printingHouse.BuyPrintingMachinesBW(70,2, 50, 10, 40);
 
@@ -147,7 +147,7 @@ public class PrintingHouseTest {
     @Test
     public void testCalculatePrintingHouseIncomeIfIsColoredIsFalse() {
         // Create a new printing house object
-        PrintingHouse printingHouse = new PrintingHouse(100000,1000, 10, 100);
+        PrintingHouse printingHouse = new PrintingHouse("IskoPHouse",100000,1000, 10, 100);
 
         // Create a new printing house publication object and add it to the printing house
         PrintingHousePublication publication = new Book("The Lord of the Rings", PageSizeType.A4,
@@ -164,7 +164,7 @@ public class PrintingHouseTest {
 
     @Test
     public void testCalculatePrintingHouseIncomeIfIsColoredIsTrue() {
-        PrintingHouse printingHouse = new PrintingHouse(100000,1000, 10, 100);
+        PrintingHouse printingHouse = new PrintingHouse("IskoPHouse",100000,1000, 10, 100);
 
         // Create a new printing house publication object and add it to the printing house
         PrintingHousePublication publication = new Book("The Lord of the Rings", PageSizeType.A4,
@@ -177,7 +177,7 @@ public class PrintingHouseTest {
 
     @Test
     public void calculateTotalSalaryExpenses() throws OutOfMoneyException {
-        PrintingHouse printingHouse = new PrintingHouse(100000,2.5, 1000, 100);
+        PrintingHouse printingHouse = new PrintingHouse("IskoPHouse",100000,2.5, 1000, 100);
         Employee employee = new PrintingMachineOperator("Ivan");
         Employee employee2 = new Manager("Iskren", 10);
         PrintingHousePublication publication = new Book("The Lord of the Rings", PageSizeType.A4,
@@ -194,7 +194,7 @@ public class PrintingHouseTest {
 
     @Test
     public void calculateTotalSalaryExpensesIfExpectedIncomeIsBiggerThanActual() throws OutOfMoneyException{
-        PrintingHouse printingHouse = new PrintingHouse(100000,3, 1000, 100);
+        PrintingHouse printingHouse = new PrintingHouse("IskoPHouse",100000,3, 1000, 100);
         Employee employee = new PrintingMachineOperator("Ivan");
         Employee employee2 = new Manager("Iskren", 10);
         PrintingHousePublication publication = new Book("The Lord of the Rings", PageSizeType.A4,
@@ -211,14 +211,14 @@ public class PrintingHouseTest {
 
     @Test
     public void buyPaperTest(){
-        PrintingHouse printingHouse = new PrintingHouse(100000,3, 100, 100);
+        PrintingHouse printingHouse = new PrintingHouse("IskoPHouse",100000,3, 100, 100);
         printingHouse.buyPaper(100, PaperType.REGULAR, PageSizeType.A4);
         double expectedPaperPrice = 25;
         assertEquals(expectedPaperPrice, printingHouse.buyPaper(100, PaperType.REGULAR, PageSizeType.A4));
     }
     @Test
     public void calculatePaperExpenses(){
-        PrintingHouse printingHouse = new PrintingHouse(100000,3, 100, 100);
+        PrintingHouse printingHouse = new PrintingHouse("IskoPHouse",100000,3, 100, 100);
         printingHouse.buyPaper(100, PaperType.REGULAR, PageSizeType.A4);
         printingHouse.buyPaper(100, PaperType.REGULAR, PageSizeType.A4);
         double expectedCalculation = 50;
@@ -228,7 +228,7 @@ public class PrintingHouseTest {
 
     @Test
     public void OutOfMoneyExceptionTest(){
-        PrintingHouse printingHouse = new PrintingHouse(10,3, 1000, 100);
+        PrintingHouse printingHouse = new PrintingHouse("IskoPHouse",10,3, 1000, 100);
         Employee employee = new PrintingMachineOperator("Iskrata");
         printingHouse.hireEmployee(employee);
 
